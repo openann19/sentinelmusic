@@ -1,0 +1,29 @@
+{
+  "mappings": {
+    "properties": {
+      "id": {
+        "type": "long"
+      },
+      "title": {
+        "type": "text",
+        "analyzer": "standard"
+      },
+      "artist": {
+        "type": "text",
+        "analyzer": "standard"
+      },
+      "releaseId": {
+        "type": "long"
+      },
+      "bpm": {
+        "type": "float"
+      },
+      "keyText": {
+        "type": "keyword"
+      },
+      "isrc": {
+        "type": "keyword"
+      }
+    }
+  }
+}

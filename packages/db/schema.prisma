@@ -1,0 +1,180 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Artist {
+  id           BigInt   @id @default(autoincrement())
+  mbid         String?  @db.Uuid
+  discogsId    BigInt?
+  name         String
+  sortName     String?
+  country      String?
+  createdAt    DateTime @default(now())
+  releases     Release[]
+  products     Product[]
+  followers    UserFollowArtist[]
+  links        SourceLink[]
+
+  @@index([name])
+}
+
+model Label {
+  id        BigInt   @id @default(autoincrement())
+  name      String
+  country   String?
+  releases  Release[]
+  links     SourceLink[]
+
+  @@index([name])
+}
+
+model Release {
+  id          BigInt      @id @default(autoincrement())
+  artistId    BigInt
+  labelId     BigInt?
+  title       String
+  releaseDate DateTime?
+  releaseType ReleaseType
+  coverUrl    String?
+  artist      Artist      @relation(fields: [artistId], references: [id])
+  label       Label?      @relation(fields: [labelId], references: [id])
+  tracks      Track[]
+  links       SourceLink[]
+
+  @@index([artistId, title])
+}
+
+enum ReleaseType {
+  single
+  ep
+  album
+  compilation
+}
+
+model Track {
+  id              BigInt       @id @default(autoincrement())
+  releaseId       BigInt
+  title           String
+  durationSeconds Int?
+  bpm             Float?
+  keyText         String?
+  isrc            String?
+  emb             Bytes? // reserved for future non-LLM embeddings if needed
+  release         Release      @relation(fields: [releaseId], references: [id])
+  links           SourceLink[]
+
+  @@index([title])
+  @@index([isrc])
+}
+
+model Source {
+  id     BigInt       @id @default(autoincrement())
+  name   String       @unique // beatport, bandcamp, junodownload, deejay, decks, discogs, musicbrainz
+  tosUrl String?
+  links  SourceLink[]
+}
+
+model SourceLink {
+  id          BigInt      @id @default(autoincrement())
+  sourceId    BigInt
+  entityType  EntityType
+  artistId    BigInt?
+  labelId     BigInt?
+  releaseId   BigInt?
+  trackId     BigInt?
+  externalId  String
+  url         String
+  previewUrl  String?
+  currency    String? // ISO4217
+  priceCents  Int?
+  lastChecked DateTime?
+  source      Source      @relation(fields: [sourceId], references: [id])
+  artist      Artist?     @relation(fields: [artistId], references: [id])
+  label       Label?      @relation(fields: [labelId], references: [id])
+  release     Release?    @relation(fields: [releaseId], references: [id])
+  track       Track?      @relation(fields: [trackId], references: [id])
+
+  @@unique([sourceId, entityType, externalId])
+}
+
+enum EntityType {
+  artist
+  label
+  release
+  track
+}
+
+model User {
+  id        BigInt            @id @default(autoincrement())
+  email     String            @unique
+  password  String // bcrypt hash
+  role      Role              @default(BASIC)
+  follows   UserFollowArtist[]
+  orders    Order[]
+  createdAt DateTime          @default(now())
+}
+
+enum Role {
+  BASIC
+  DJ
+  ARTIST
+  LABEL
+  ADMIN
+}
+
+model UserFollowArtist {
+  userId   BigInt
+  artistId BigInt
+  user     User   @relation(fields: [userId], references: [id])
+  artist   Artist @relation(fields: [artistId], references: [id])
+
+  @@id([userId, artistId])
+}
+
+model Product {
+  id            BigInt        @id @default(autoincrement())
+  ownerArtistId BigInt
+  title         String
+  sku           String        @unique
+  currency      String
+  priceCents    Int
+  ownerArtist   Artist        @relation(fields: [ownerArtistId], references: [id])
+  splits        RoyaltySplit[]
+}
+
+model Order {
+  id           BigInt      @id @default(autoincrement())
+  userId       BigInt
+  status       OrderStatus @default(CREATED)
+  extProvider  String?     // "stripe"
+  extSessionId String?
+  createdAt    DateTime    @default(now())
+  user         User        @relation(fields: [userId], references: [id])
+}
+
+enum OrderStatus {
+  CREATED
+  PAID
+  FAILED
+  CANCELLED
+}
+
+model RoyaltySplit {
+  id        BigInt    @id @default(autoincrement())
+  productId BigInt
+  payeeType PayeeType
+  payeeId   BigInt
+  pct       Decimal   @db.Decimal(5, 2)
+  product   Product   @relation(fields: [productId], references: [id])
+}
+
+enum PayeeType {
+  ARTIST
+  LABEL
+}
+
