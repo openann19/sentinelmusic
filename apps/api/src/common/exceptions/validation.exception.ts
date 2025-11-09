@@ -10,4 +10,3 @@ export class ValidationException extends BadRequestException {
     });
   }
 }
-

@@ -15,7 +15,7 @@ export interface JwtPayload {
 export class AuthService {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly configService: ConfigService,
+    private readonly configService: ConfigService
   ) {}
 
   /**
@@ -24,7 +24,10 @@ export class AuthService {
    * @param password - User password
    * @returns User data if credentials are valid, null otherwise
    */
-  async validateUser(email: string, password: string): Promise<{
+  async validateUser(
+    email: string,
+    password: string
+  ): Promise<{
     id: bigint;
     email: string;
     role: string;
@@ -67,7 +70,7 @@ export class AuthService {
         role: user.role,
       },
       secret,
-      { expiresIn: '2h' },
+      { expiresIn: '2h' }
     );
   }
 
@@ -90,4 +93,3 @@ export class AuthService {
     }
   }
 }
-

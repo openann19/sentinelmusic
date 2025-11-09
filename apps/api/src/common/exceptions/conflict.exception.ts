@@ -10,4 +10,3 @@ export class ConflictException extends NestConflictException {
     });
   }
 }
-

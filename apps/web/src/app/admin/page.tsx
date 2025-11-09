@@ -8,8 +8,8 @@ import { ArrowUp, ArrowDown } from 'lucide-react';
 interface Track {
   id: string;
   title: string;
-  bpm?: number;
-  keyText?: string;
+  bpm?: number | null;
+  keyText?: string | null;
   release: {
     artist: {
       name: string;

@@ -19,10 +19,10 @@ const mockSetQueue = jest.fn();
 const mockPush = jest.fn();
 const mockTrack = jest.fn();
 
-(usePlayer as jest.Mock).mockReturnValue({
+(usePlayer as unknown as jest.Mock).mockReturnValue({
   setQueue: mockSetQueue,
 });
-(usePlayer.getState as jest.Mock) = jest.fn(() => ({
+(usePlayer.getState as unknown as jest.Mock) = jest.fn(() => ({
   setQueue: mockSetQueue,
 }));
 

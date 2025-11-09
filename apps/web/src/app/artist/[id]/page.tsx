@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
-import ArtistTrackList from '../../components/ArtistTrackList';
-import PageFade from '../../components/PageFade';
+import ArtistTrackList from '../../../components/ArtistTrackList';
+import PageFade from '../../../components/PageFade';
 
 interface Artist {
   id: string;

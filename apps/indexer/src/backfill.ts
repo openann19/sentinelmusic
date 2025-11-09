@@ -87,7 +87,15 @@ async function run(): Promise<void> {
   let totalIndexed = 0;
 
   while (true) {
-    const rows = await prisma.track.findMany({
+    const rows: Array<{
+      id: bigint;
+      title: string;
+      releaseId: bigint;
+      bpm: number | null;
+      keyText: string | null;
+      isrc: string | null;
+      release: { artist: { name: string } };
+    }> = await prisma.track.findMany({
       where: cursor ? { id: { gt: cursor } } : {},
       take: batch,
       orderBy: { id: 'asc' },

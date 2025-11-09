@@ -9,9 +9,4 @@ export {
   SourceLinkDto,
   SourceDto,
 } from './artist-response.dto';
-export {
-  SearchResponseDto,
-  SearchTrackDto,
-  SearchArtistDto,
-} from './search-response.dto';
-
+export { SearchResponseDto, SearchTrackDto, SearchArtistDto } from './search-response.dto';

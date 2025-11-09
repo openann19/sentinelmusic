@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import PlayerBar from './PlayerBar';
 import AudioEngine from './AudioEngine';
 import { usePlayer } from './usePlayer';

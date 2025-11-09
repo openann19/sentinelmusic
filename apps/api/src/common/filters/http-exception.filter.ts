@@ -42,10 +42,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
     };
 
     if (status >= 500) {
-      this.logger.error(
-        `HTTP ${status} Error: ${JSON.stringify(errorResponse)}`,
-        exception.stack,
-      );
+      this.logger.error(`HTTP ${status} Error: ${JSON.stringify(errorResponse)}`, exception.stack);
     } else if (status >= 400) {
       this.logger.warn(`HTTP ${status} Error: ${JSON.stringify(errorResponse)}`);
     }
@@ -64,9 +61,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const request = ctx.getRequest<FastifyRequest>();
 
     const status =
-      exception instanceof HttpException
-        ? exception.getStatus()
-        : HttpStatus.INTERNAL_SERVER_ERROR;
+      exception instanceof HttpException ? exception.getStatus() : HttpStatus.INTERNAL_SERVER_ERROR;
 
     let message: string | string[];
     let error: string | undefined;
@@ -95,10 +90,9 @@ export class AllExceptionsFilter implements ExceptionFilter {
 
     this.logger.error(
       `Unhandled Exception: ${JSON.stringify(errorResponse)}`,
-      exception instanceof Error ? exception.stack : String(exception),
+      exception instanceof Error ? exception.stack : String(exception)
     );
 
     response.status(status).send(errorResponse);
   }
 }
-

@@ -39,4 +39,3 @@ export class ErrorResponseDto {
   })
   errors?: Record<string, string[]>;
 }
-

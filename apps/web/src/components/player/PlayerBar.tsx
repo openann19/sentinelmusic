@@ -52,7 +52,7 @@ export default function PlayerBar() {
   }, [s.position, s.buffered, current?.durationSeconds]);
 
   const bufferedPct = useMemo(() => {
-    const dur = current?.durationSeconds ?? s.buffered || 0;
+    const dur = (current?.durationSeconds ?? s.buffered) || 0;
     if (!dur) return 0;
     return Math.min(1, s.buffered / dur);
   }, [s.buffered, current?.durationSeconds]);
@@ -155,7 +155,7 @@ export default function PlayerBar() {
               ).getBoundingClientRect();
               const pct = (e.clientX - r.left) / r.width;
               const dur =
-                current?.durationSeconds ?? Math.max(s.buffered, s.position) || 0;
+                (current?.durationSeconds ?? Math.max(s.buffered, s.position)) || 0;
               s.seek(pct * dur);
             }}
           >

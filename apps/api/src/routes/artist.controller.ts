@@ -1,11 +1,4 @@
-import {
-  Controller,
-  Get,
-  Param,
-  HttpStatus,
-  HttpCode,
-  Version,
-} from '@nestjs/common';
+import { Controller, Get, Param, HttpStatus, HttpCode, Version } from '@nestjs/common';
 import {
   ApiTags,
   ApiOperation,
@@ -16,10 +9,7 @@ import {
 } from '@nestjs/swagger';
 import { ArtistService } from '../modules/artist.service';
 import { ArtistParamsDto } from '../dto/artist-params.dto';
-import {
-  ArtistResponseDto,
-  ErrorResponseDto,
-} from '../common/dto/responses';
+import { ArtistResponseDto, ErrorResponseDto } from '../common/dto/responses';
 
 @ApiTags('artists')
 @Controller({ path: 'artists', version: '1' })

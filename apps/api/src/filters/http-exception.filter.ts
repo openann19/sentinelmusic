@@ -33,7 +33,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
     };
 
     this.logger.warn(
-      `HTTP ${status} Error: ${request.method} ${request.url} - ${JSON.stringify(message)}`,
+      `HTTP ${status} Error: ${request.method} ${request.url} - ${JSON.stringify(message)}`
     );
 
     response.status(status).send(errorResponse);
@@ -50,14 +50,10 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const request = ctx.getRequest<FastifyRequest>();
 
     const status =
-      exception instanceof HttpException
-        ? exception.getStatus()
-        : HttpStatus.INTERNAL_SERVER_ERROR;
+      exception instanceof HttpException ? exception.getStatus() : HttpStatus.INTERNAL_SERVER_ERROR;
 
     const message =
-      exception instanceof HttpException
-        ? exception.getResponse()
-        : 'Internal server error';
+      exception instanceof HttpException ? exception.getResponse() : 'Internal server error';
 
     const errorResponse = {
       statusCode: status,
@@ -70,7 +66,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
     if (status === HttpStatus.INTERNAL_SERVER_ERROR) {
       this.logger.error(
         `Internal Server Error: ${request.method} ${request.url}`,
-        exception instanceof Error ? exception.stack : String(exception),
+        exception instanceof Error ? exception.stack : String(exception)
       );
     }
 
