@@ -10,4 +10,3 @@ export class BadGatewayException extends NestBadGatewayException {
     });
   }
 }
-

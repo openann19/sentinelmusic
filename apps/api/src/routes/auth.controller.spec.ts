@@ -75,10 +75,7 @@ describe('AuthController', () => {
           role: mockUser.role,
         },
       });
-      expect(authService.validateUser).toHaveBeenCalledWith(
-        loginDto.email,
-        loginDto.password,
-      );
+      expect(authService.validateUser).toHaveBeenCalledWith(loginDto.email, loginDto.password);
       expect(authService.generateToken).toHaveBeenCalledWith({
         id: mockUser.id,
         role: mockUser.role,
@@ -93,16 +90,9 @@ describe('AuthController', () => {
 
       mockAuthService.validateUser.mockResolvedValue(null);
 
-      await expect(controller.login(loginDto)).rejects.toThrow(
-        UnauthorizedException,
-      );
-      await expect(controller.login(loginDto)).rejects.toThrow(
-        'Invalid email or password',
-      );
-      expect(authService.validateUser).toHaveBeenCalledWith(
-        loginDto.email,
-        loginDto.password,
-      );
+      await expect(controller.login(loginDto)).rejects.toThrow(UnauthorizedException);
+      await expect(controller.login(loginDto)).rejects.toThrow('Invalid email or password');
+      expect(authService.validateUser).toHaveBeenCalledWith(loginDto.email, loginDto.password);
       expect(authService.generateToken).not.toHaveBeenCalled();
     });
 
@@ -114,9 +104,7 @@ describe('AuthController', () => {
 
       mockAuthService.validateUser.mockResolvedValue(null);
 
-      await expect(controller.login(loginDto)).rejects.toThrow(
-        UnauthorizedException,
-      );
+      await expect(controller.login(loginDto)).rejects.toThrow(UnauthorizedException);
     });
   });
 
@@ -128,4 +116,3 @@ describe('AuthController', () => {
     });
   });
 });
-

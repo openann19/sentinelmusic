@@ -20,11 +20,7 @@ import {
 import { AuthService } from '../modules/auth.service';
 import { AdminGuard } from '../security/admin.guard';
 import { LoginDto } from '../dto/login.dto';
-import {
-  LoginResponseDto,
-  AdminResponseDto,
-  ErrorResponseDto,
-} from '../common/dto/responses';
+import { LoginResponseDto, AdminResponseDto, ErrorResponseDto } from '../common/dto/responses';
 
 /**
  * Controller for authentication-related endpoints
@@ -53,10 +49,7 @@ export class AuthController {
     type: ErrorResponseDto,
   })
   async login(@Body() loginDto: LoginDto): Promise<LoginResponseDto> {
-    const user = await this.authService.validateUser(
-      loginDto.email,
-      loginDto.password,
-    );
+    const user = await this.authService.validateUser(loginDto.email, loginDto.password);
 
     if (!user) {
       throw new UnauthorizedException('Invalid email or password');

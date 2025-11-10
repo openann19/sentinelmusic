@@ -1,10 +1,7 @@
 import 'dotenv/config';
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe, Logger, VersioningType } from '@nestjs/common';
-import {
-  FastifyAdapter,
-  NestFastifyApplication,
-} from '@nestjs/platform-fastify';
+import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import helmet from '@fastify/helmet';
 import rateLimit from '@fastify/rate-limit';
@@ -19,20 +16,22 @@ async function bootstrap(): Promise<void> {
 
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
-    new FastifyAdapter({ logger: true }),
+    new FastifyAdapter({ logger: true })
   );
 
   const configService = app.get(ConfigService);
 
   const fastifyInstance = app.getHttpAdapter().getInstance();
   // Register Fastify plugins with type assertion to resolve TypeScript plugin type conflicts
-  await fastifyInstance.register(helmet as unknown as Parameters<typeof fastifyInstance.register>[0]);
+  await fastifyInstance.register(
+    helmet as unknown as Parameters<typeof fastifyInstance.register>[0]
+  );
   await fastifyInstance.register(
     rateLimit as unknown as Parameters<typeof fastifyInstance.register>[0],
     {
       max: 100,
       timeWindow: '1 minute',
-    },
+    }
   );
 
   app.enableCors({
@@ -57,7 +56,7 @@ async function bootstrap(): Promise<void> {
       transformOptions: {
         enableImplicitConversion: true,
       },
-    }),
+    })
   );
 
   const config = new DocumentBuilder()

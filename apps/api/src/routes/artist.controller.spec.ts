@@ -56,13 +56,9 @@ describe('ArtistController', () => {
     it('should throw EntityNotFoundException when artist is not found', async () => {
       const artistId = '999';
 
-      mockArtistService.findById.mockRejectedValue(
-        new EntityNotFoundException('Artist', artistId),
-      );
+      mockArtistService.findById.mockRejectedValue(new EntityNotFoundException('Artist', artistId));
 
-      await expect(controller.getById({ id: artistId })).rejects.toThrow(
-        EntityNotFoundException,
-      );
+      await expect(controller.getById({ id: artistId })).rejects.toThrow(EntityNotFoundException);
       expect(artistService.findById).toHaveBeenCalledWith(BigInt(artistId));
     });
 
@@ -73,4 +69,3 @@ describe('ArtistController', () => {
     });
   });
 });
-

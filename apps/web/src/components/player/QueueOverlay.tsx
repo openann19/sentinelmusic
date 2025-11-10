@@ -18,6 +18,7 @@ export default function QueueOverlay() {
       window.addEventListener('keydown', handleEscape);
       return () => window.removeEventListener('keydown', handleEscape);
     }
+    return undefined;
   }, [open]);
 
   if (s.queue.length === 0) {

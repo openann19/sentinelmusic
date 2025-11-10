@@ -15,4 +15,3 @@ export class AdminPingResponseDto {
   })
   ok!: boolean;
 }
-

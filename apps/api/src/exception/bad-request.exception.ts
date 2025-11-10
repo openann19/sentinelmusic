@@ -19,4 +19,3 @@ export class NotFoundException extends BadRequestException {
     });
   }
 }
-

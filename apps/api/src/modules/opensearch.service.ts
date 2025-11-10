@@ -18,9 +18,10 @@ export class OpenSearchService implements OnModuleInit, OnModuleDestroy {
    * Tests connection and logs status
    */
   async onModuleInit(): Promise<void> {
-    const node = this.configService.get<string>('OPENSEARCH_URL') ||
+    const node =
+      this.configService.get<string>('OPENSEARCH_URL') ||
       this.configService.get<string>('OPENSEARCH_NODE', 'http://localhost:9200');
-    
+
     const username = this.configService.get<string>('OPENSEARCH_USERNAME');
     const password = this.configService.get<string>('OPENSEARCH_PASSWORD');
 
@@ -32,12 +33,13 @@ export class OpenSearchService implements OnModuleInit, OnModuleDestroy {
     try {
       this.client = new Client({
         node,
-        ...(username && password && {
-          auth: {
-            username,
-            password,
-          },
-        }),
+        ...(username &&
+          password && {
+            auth: {
+              username,
+              password,
+            },
+          }),
         ssl: {
           rejectUnauthorized: false,
         },
@@ -49,7 +51,7 @@ export class OpenSearchService implements OnModuleInit, OnModuleDestroy {
     } catch (error) {
       this.logger.warn(
         'OpenSearch client initialization failed, search will use database fallback',
-        error instanceof Error ? error.stack : String(error),
+        error instanceof Error ? error.stack : String(error)
       );
       this.client = undefined;
     }
@@ -108,7 +110,7 @@ export class OpenSearchService implements OnModuleInit, OnModuleDestroy {
     } catch (error) {
       this.logger.error(
         'OpenSearch query failed',
-        error instanceof Error ? error.stack : String(error),
+        error instanceof Error ? error.stack : String(error)
       );
       throw error;
     }

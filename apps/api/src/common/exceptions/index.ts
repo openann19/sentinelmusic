@@ -5,4 +5,3 @@ export { ConflictException } from './conflict.exception';
 export { InternalServerErrorException } from './internal-server-error.exception';
 export { BadGatewayException } from './bad-gateway.exception';
 export { ServiceUnavailableException } from './service-unavailable.exception';
-

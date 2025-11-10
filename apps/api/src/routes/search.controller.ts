@@ -1,10 +1,4 @@
-import {
-  Controller,
-  Get,
-  Query,
-  HttpStatus,
-  HttpCode,
-} from '@nestjs/common';
+import { Controller, Get, Query, HttpStatus, HttpCode } from '@nestjs/common';
 import {
   ApiTags,
   ApiOperation,
@@ -14,10 +8,7 @@ import {
 } from '@nestjs/swagger';
 import { SearchService } from '../modules/search.service';
 import { SearchQueryDto } from '../dto/search-query.dto';
-import {
-  SearchResponseDto,
-  ErrorResponseDto,
-} from '../common/dto/responses';
+import { SearchResponseDto, ErrorResponseDto } from '../common/dto/responses';
 
 @ApiTags('search')
 @Controller({ path: 'search', version: '1' })

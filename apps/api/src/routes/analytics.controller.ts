@@ -1,17 +1,5 @@
-import {
-  Controller,
-  Post,
-  Body,
-  HttpCode,
-  HttpStatus,
-  Logger,
-} from '@nestjs/common';
-import {
-  ApiTags,
-  ApiOperation,
-  ApiResponse,
-  ApiBadRequestResponse,
-} from '@nestjs/swagger';
+import { Controller, Post, Body, HttpCode, HttpStatus, Logger } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiResponse, ApiBadRequestResponse } from '@nestjs/swagger';
 import { ErrorResponseDto } from '../common/dto/responses';
 
 interface AnalyticsEventDto {
@@ -41,4 +29,3 @@ export class AnalyticsController {
     return { ok: true };
   }
 }
-

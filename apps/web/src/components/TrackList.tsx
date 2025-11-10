@@ -49,7 +49,7 @@ export default function TrackList({ releases, artistName }: TrackListProps) {
   const { add: addToCrate } = useCrate();
   const { push } = useToast();
 
-  const handlePreview = (release: Release, track: Track) => {
+  const handlePreview = (_release: Release, track: Track) => {
     const allTracks: TrackItem[] = releases.flatMap((r) =>
       r.tracks.map((t) => ({
         id: Number(t.id),

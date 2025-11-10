@@ -12,7 +12,7 @@ export class SearchService {
 
   constructor(
     private readonly prisma: PrismaService,
-    private readonly openSearchService: OpenSearchService,
+    private readonly openSearchService: OpenSearchService
   ) {}
 
   /**
@@ -47,16 +47,14 @@ export class SearchService {
         } catch (error) {
           this.logger.warn(
             'OpenSearch query failed, falling back to database search',
-            error instanceof Error ? error.stack : String(error),
+            error instanceof Error ? error.stack : String(error)
           );
         }
       }
 
       // If OpenSearch returned zero hits, fallback to database search
       if (this.openSearchService.isAvailable() && !openSearchHadResults) {
-        this.logger.debug(
-          'OpenSearch returned zero hits, falling back to database search',
-        );
+        this.logger.debug('OpenSearch returned zero hits, falling back to database search');
         return this.prisma.client.track.findMany({
           where: { title: { contains: query, mode: 'insensitive' } },
           take: limit,
@@ -95,7 +93,7 @@ export class SearchService {
     } catch (error) {
       this.logger.error(
         'Search failed, using database fallback',
-        error instanceof Error ? error.stack : String(error),
+        error instanceof Error ? error.stack : String(error)
       );
 
       return this.prisma.client.track.findMany({
@@ -125,4 +123,3 @@ export class SearchService {
     return { artists, tracks };
   }
 }
-
